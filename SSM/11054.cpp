@@ -16,28 +16,8 @@ int maximum(int a, int b, int c) {
 }
 
 int main() {
-	int i, j, input, n, dp[1001] = { 0 }, w[1001], max;
 
-	cin >> n;
-	for (i = 1; i <= n; i++) {
-		cin >> w[i];
-	}
-
-	//√ ±‚
-	dp[1] = 1;
-	max = 1;
-	//DP
-	for (i = 2; i <= n; i++) {
-		j = i;
-		dp[i] = dp[1];
-		while (--j) {
-			if (w[j] < w[i])
-				dp[i] = maximum(dp[i], dp[j] + 1);
-		}
-		max = maximum(max, dp[i]);
-		//cout << dp[i] << '\n';
-	}
-	cout << max;
+	cout << "\\    /\\\n )  ( ')\n(  /  )\n	\\(__) \| ";
 
 	return 0;
 }
