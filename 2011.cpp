@@ -10,14 +10,12 @@ int main() {
 	int num = 0, i, len;
 	string input;
 
-
 	cin >> input;
 	len = input.length();
 	for (int i = 1; i <= len; i++)
 	{
 		code[i] = input[i - 1] - '0';
 	}
-
 
 	if (code[1] == 0) {
 		cout << 0;

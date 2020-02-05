@@ -15,9 +15,8 @@ void dfs(int start, int vertexNum, bool **bp, bool *visited) {
 }
 
 int main() {
-	int vertexNum, edgeNum, start;
+	int vertexNum, edgeNum, start, t1, t2, j;
 	bool **bp, *visited;
-	int t1, t2, j;
 	queue <int> bfsQueue;
 	
 	cin >> vertexNum >> edgeNum >> start ; 
@@ -28,30 +27,28 @@ int main() {
 	for (int i = 1; i <= row; i++) {
 		bp[i] = (bool *)calloc(col+1,sizeof(bool));
 	}
-
-	visited = (bool *)malloc(sizeof(bool)*(1 + vertexNum));
-
-	for (int i = 1; i <= vertexNum; i++) {
-		visited[i] = false;
-	}
 	for (int i = 1; i <= edgeNum; i++) {
 		cin >> t1 >> t2;
 		bp[t1][t2] = true;
 		bp[t2][t1] = true;
 	}
 
+	visited = (bool *)malloc(sizeof(bool)*(1 + vertexNum));
+	for (int i = 1; i <= vertexNum; i++) {
+		visited[i] = false;
+	}
+	
+
 	//Depth First Search
 	dfs(start,vertexNum, bp,visited);
 	cout << '\n';
 
 
-	
 	for (int i = 1; i <= vertexNum; i++) {
 		visited[i] = false;
 	}
 
 	//Breadth First Search
-
 	int tmp;
 	bfsQueue.push(start);
 	visited[start] = true;
