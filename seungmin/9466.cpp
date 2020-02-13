@@ -2,32 +2,36 @@
 #include <utility>
 
 using namespace std;
-void dfs(int* bp, int* visited, int hope,int start);
+void dfs(int* bp, bool* visited, bool* team, int hope, int start, int check);
 
-int cnt=0;
 
 int main(void)
 {
 	int howMany;
 	int studentNum;
-	int edgeNum;
-	int* visited;
 	int compare;
 	int hope;
 	int start;
+	int check=0;
+	int cnt = 0;
 
 	cin >> howMany;
 	while (--howMany) 
 	{
 		cin >> studentNum;
 
-		edgeNum = studentNum - 1;
-		int* bp;
-		bp = (int*)malloc(sizeof(int) * (studentNum + 1));
-		visited = (int*)malloc(sizeof(int) * (studentNum + 1));
+		int *bp;
+		bool *visited;
+		bool *team;
+		bp = (int *)malloc(sizeof(int) * (studentNum + 1));
+		visited = (bool *)malloc(sizeof(bool) * (studentNum + 1));
+		team = (bool *)malloc(sizeof(bool) * (studentNum + 1));
 
 		for (int i = 0; i <= studentNum; i++)
 			visited[i] = false;
+
+		for (int i = 0; i <= studentNum; i++)
+			team[i] = false;
 
 		for (int i = 1; i <= studentNum; i++)
 		{
@@ -35,16 +39,31 @@ int main(void)
 			bp[i] = hope;
 		}
 
+		cout << "\n";
+
 
 		for (int i = 1; i <= studentNum; i++)
 		{
-			if (visited[i] == 0)
+			if (visited[i] == 0) //검사되지 않은 애들만
 			{
 				visited[i] = true;
 				start = i;
-				dfs(bp, visited, bp[start], start);
+				dfs(bp, visited, team, bp[start], start,check);
+				for (int i = 1; i <= studentNum; i++)
+				{
+				cout << team[i];
+				cout << "\n";
+				}
 			}
 		}
+		
+
+		for (int i = 1; i <= studentNum; i++) 
+		{
+			if (team[i] == true)
+				cnt++;
+		}
+			
 
 		cout << cnt;
 	}
@@ -52,19 +71,31 @@ int main(void)
 	return 0;
 }
 
-void dfs(int* bp, int* visited, int hope, int root) {
+void dfs(int* bp, bool *visited, bool *team, int hope, int start,int check) {
 
-	visited[hope] = true; //3은 방문 됐다
-	if (bp[hope] == root) //3이 가고싶은 곳
+	if (visited[hope] != true) 
 	{
-		cnt++;
-	}
-	else if (visited[bp[hope]] != true)
-	{
-		visited[bp[hope]] = true;
-		dfs(bp, visited, bp[hope], root);
-	}
+		visited[hope] = true; //3은 방문 됐다
+		if (bp[hope] == start) //3이 가고싶은 곳
+		{
+			bp[hope] = true;
+			check = 1;
+			team[bp[hope]] = true;
 
+			return ;
+		}
+		else if (visited[bp[hope]] != true)
+		{
+			visited[bp[hope]] = true;
+			dfs(bp, visited, team, bp[hope], start,check);
+			if (check == 1) 
+			{
+				team[hope] = true;
+			}
+				
+		}
+	}
+	
 	return;
 }
 
