@@ -1,57 +1,47 @@
 #include <iostream>
-#include <utility>
 #include <vector>
 using namespace std;
-void dfs(int i, int* visited);
-
-vector<int> bp[20001];
-
-int main(void)
-{
-	int vertexNum, edgeNum, repeat;
-	int* visited;
-	int u, v;
-	int cnt = 0;
-
-	cin >> repeat;
-	while (repeat--) {
-		cin >> vertexNum >> edgeNum;
-		visited = (int*)malloc(sizeof(int) * (vertexNum + 1));
-		for (int i = 0; i <= vertexNum; i++) {
-			visited[i] = false;
-			bp[i].clear();
-		}
-		for (int i = 1; i <= edgeNum; i++)
-		{
-			cin >> u >> v;
-			bp[u].push_back(v);
-			bp[v].push_back(u);
-		}
-		visited[0] = true;
-		for (int i = 1; i < vertexNum; i++) {
-			if (visited[i] == false) {
-				visited[i] = 1;
-				dfs(i, visited);
-			}
-		}
-
-		if (visited[0])
-			cout << "YES" << '\n';
-		else
-			cout << "NO" << '\n';
-		free(visited);
+?
+vector <int> P;
+void dfs(int, bool*);
+?
+void dfs(int start, bool* visited) {
+	if (visited[P.at(start)] == false) {
+		visited[P.at(start)] = true;
+		//vector<int>::iterator j =P.erase(P.begin);
+		dfs(P.at(start), visited);
 	}
-	return 0;
 }
-void dfs(int i, int* visited) {
-	for (int j = 0; j < bp[i].size(); j++) {
-		if (visited[bp[i][j]] == false) {
-			visited[bp[i][j]] = (-1) * visited[i];
-			dfs(bp[i][j], visited);
+?
+int main() {
+	int repeat, howMany, num, cnt;
+	bool visited[1001];
+	cin >> repeat;
+	?
+		?
+		while (repeat--) {
+			cnt = 0;
+			cin >> howMany;
+			?
+				for (int i = 0; i <= howMany; i++) {
+					visited[i] = false;
+					P.clear();
+				}
+			P.push_back(0);
+			for (int i = 1; i <= howMany; i++) {
+				cin >> num;
+				P.push_back(num);
+			}
+			?
+				for (int i = 1; i <= howMany; i++) {
+					if (visited[i] == false) {
+						++cnt;
+						dfs(i, visited);
+
+					}
+
+				}
+			cout << cnt << '\n';
 		}
-		else if (visited[bp[i][j]] != false) {
-			if (visited[bp[i][j]] != (-1) * visited[i])
-				visited[0] = false;
-		}
-	}
+	return 0;
 }
