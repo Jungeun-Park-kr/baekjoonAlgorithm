@@ -13,23 +13,21 @@ int v[100001];
 //vector<int> checked;
 bool checked[100001];
 
-
-
 void dfs(int start) {
-	if (!visited[start]) {
-		visited[start] = true;
-
-		dfs(v[start]);
-
-		visited[start] = false;
-	}
-	else if (!checked[start]) {
-		for (int k = start; v[k] != start; k = v[k]) {
+	int next = v[start];
+	checked[start] = true;
+	if (checked[next]) {
+		if (!visited[next]) {
+			for (int k = next; k != start; k = v[k]) {
+				cnt++;
+			}
 			cnt++;
 		}
-		cnt++;
 	}
-	checked[start] = true;
+	else {
+		dfs(next);
+	}
+	visited[start] = true;
 }
 
 int main() {
@@ -48,11 +46,12 @@ int main() {
 		//검색
 		cnt = 0;
 		for (i = 1; i <= howMany; i++) {
-			dfs(i);
+			if (!checked[i]) {
+				dfs(i);
+			}
 		}
 		//출력
 		cout << howMany - cnt << '\n';
 	}
-
 	return 0;
 }
